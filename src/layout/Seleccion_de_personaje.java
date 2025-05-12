@@ -7,6 +7,7 @@ package layout;
 import javax.swing.*;
 import java.util.Map;
 import java.util.HashMap;
+import logic.Logica.*;
 
 /**
  *
@@ -56,6 +57,7 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
         aniadir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         volver.setText("Volver");
         volver.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +113,11 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
         );
 
         jButton2.setText("Empezar Partida");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         aniadir.setText("+");
         aniadir.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +193,17 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
         this.dispose();
         Menu menu = new Menu();
     }//GEN-LAST:event_volverActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try
+        {
+            logic.Logica.empezar_partida(players);
+        }
+        catch (Exception ex)
+        {
+            
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

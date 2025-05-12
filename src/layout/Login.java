@@ -42,6 +42,7 @@ public class Login extends javax.swing.JFrame {
         siguiente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         registrar.setText("Registrar");
         registrar.addActionListener(new java.awt.event.ActionListener() {

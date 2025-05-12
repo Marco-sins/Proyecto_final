@@ -31,6 +31,7 @@ public class Multijugador extends javax.swing.JFrame {
         online = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         volver.setText("Volver");
         volver.addActionListener(new java.awt.event.ActionListener() {

@@ -25,27 +25,25 @@ public class Partida extends javax.swing.JFrame {
     private int players;
 
     public Partida(int players, List<JTextField> list, List<JComboBox> bicho, List<JComboBox> ia) {
-        initComponents();
-        colocar_paneles(players);
-        this.setLocationRelativeTo(null);
         this.bicho_elegido = bicho;
         this.campos = list;
         this.ia_o_humano = ia;
         this.players = players;
+        initComponents();
         set_nombres();
+        colocar_paneles(players);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
     
     public void set_nombres()
     {
-        if (players < 2)
-            nombre.setText("Nombre: " + campos.get(0));
-        if (players < 3)
-            nombre.setText("Nombre: " + campos.get(1));
-        if (players < 4)
-            nombre.setText("Nombre: " + campos.get(2));
-        if (players < 5)
-            nombre.setText("Nombre: " + campos.get(3));
+        nombre.setText("Nombre: " + (campos.get(0).getText()));
+        nombre2.setText("Nombre: " + (campos.get(1).getText()));
+        if (players >= 3)
+            nombre3.setText("Nombre: " + (campos.get(2).getText()));
+        if (players >= 4)
+            nombre4.setText("Nombre: " + (campos.get(3).getText()));
     }
     
     public void colocar_paneles(int players)
@@ -161,6 +159,11 @@ public class Partida extends javax.swing.JFrame {
         tienda.setText("Tienda");
 
         dados.setText("Tirar dados");
+        dados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dadosActionPerformed(evt);
+            }
+        });
 
         nombre2.setText("Nombre:");
 
@@ -381,6 +384,11 @@ public class Partida extends javax.swing.JFrame {
     private void cartas4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartas4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cartas4ActionPerformed
+
+    private void dadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dadosActionPerformed
+        // TODO add your handling code here:
+        Dados dados = new Dados();
+    }//GEN-LAST:event_dadosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

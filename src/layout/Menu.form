@@ -29,8 +29,7 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="multijugador" max="32767" attributes="0"/>
-                          <Component id="un_jugador" alignment="0" max="32767" attributes="0"/>
+                          <Component id="un_jugador" alignment="0" pref="107" max="32767" attributes="0"/>
                           <Component id="opciones" alignment="0" max="32767" attributes="0"/>
                           <Component id="salir" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -49,10 +48,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace pref="37" max="32767" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="143" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
               <Component id="un_jugador" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="multijugador" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="opciones" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -72,18 +69,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="un_jugador">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Un Jugador"/>
+        <Property name="text" type="java.lang.String" value="Jugar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="un_jugadorActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="multijugador">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Multijugador"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="multijugadorActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="opciones">

@@ -7,7 +7,9 @@ package layout;
 import javax.swing.*;
 import java.util.Map;
 import java.util.HashMap;
-import logic.Logica.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.awt.Component;
 
 /**
  *
@@ -16,14 +18,20 @@ import logic.Logica.*;
 public class Seleccion_de_personaje extends javax.swing.JFrame {
 
     private int players = 1;
+    private int name_players = 2;
     private Map<String, JPanel> mapa = new HashMap<>();
+    private List<JComboBox> bicho_elegido = new ArrayList<>();
+    private List<JTextField> campos = new ArrayList<>();
+    private List<JComboBox> ia_o_humano = new ArrayList<>();
     /**
      * Creates new form Seleccion_de_personaje
      */
     public Seleccion_de_personaje() {
         initComponents();
-        // Después de initComponents() o en el constructor
-        jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.Y_AXIS)); // o FlowLayout, como prefieras
+        jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.Y_AXIS));
+        campos.add(usuario);
+        bicho_elegido.add(lista_bichos);
+        ia_o_humano.add(pc_o_humano);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -32,6 +40,20 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
     {
         JButton boton = (JButton) evt.getSource();
         JPanel panel = mapa.get(boton.getName());
+        Component[] componentes = panel.getComponents();
+        
+        for (int i = 0; i < componentes.length; i++)
+        {
+            if (componentes[i] instanceof JTextField)
+                campos.remove(componentes[i]);
+            else if (componentes[i] instanceof JComboBox)
+            {
+                if (componentes[i].getName().equals("bichos"))
+                    bicho_elegido.remove(componentes[i]);
+                else
+                    ia_o_humano.remove(componentes[i]);
+            }
+        }
         jPanel1.remove(panel);
         jPanel1.revalidate();
         jPanel1.repaint();
@@ -66,9 +88,9 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
             }
         });
 
-        lista_bichos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        lista_bichos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "The King", "Alienoid", "Gigazaur", "Mekadragon", "Space Pinguin", "Boogie Woogie", "Pumping Jack", "Pandakai", "Cyber Kitty", " " }));
 
-        pc_o_humano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        pc_o_humano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Humano", "IA" }));
 
         usuario.setText("Jugador1");
 
@@ -77,7 +99,7 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lista_bichos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -103,7 +125,7 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,14 +158,14 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(volver))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(aniadir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2))
+                        .addGap(68, 68, 68)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(223, Short.MAX_VALUE))
+                        .addGap(113, 113, 113)
+                        .addComponent(aniadir, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(106, 106, 106)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,10 +174,10 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
                 .addComponent(volver)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(aniadir))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(aniadir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -166,14 +188,39 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (players < 4)
         {
+            JComboBox<String> combo = new JComboBox<>();
+            combo.setName("bichos");
+            /*The King
+            Alienoid
+            Gigazaur
+            Mekadragon
+            Space Pinguin
+            Boogie Woogie
+            Pumping Jack
+            Pandakai
+            Cyber Kitty
+            */
+            combo.addItem("The King");
+            combo.addItem("Alienoid");
+            combo.addItem("Gigazaur");
+            combo.addItem("Mekadragon");
+            combo.addItem("Space Pingui");
+            combo.addItem("Boogie Woogie");
+            combo.addItem("Pumping Jack");
+            combo.addItem("Pandakai");
+            combo.addItem("Cyber Kitty");
+            JComboBox<String> combo2 = new JComboBox<>();
+            combo2.setName("ia_o_humano");
+            combo2.addItem("Humano");
+            combo2.addItem("IA");
+            JTextField usuario = new JTextField();
+            campos.add(usuario);
+            usuario.setText("Jugador" + name_players);
+            usuario.setName("Jugador" + name_players);
             JButton eliminar = new JButton();
-            eliminar.setName(String.valueOf(players));
+            eliminar.setName(String.valueOf(name_players));
             eliminar.setText("-");
             eliminar.addActionListener(evt2 -> eliminarActionPerformed(evt2));
-            JComboBox<String> combo = new JComboBox<>();
-            JComboBox<String> combo2 = new JComboBox<>();
-            JTextField usuario = new JTextField();
-            usuario.setText("Jugador" + (players + 1));
             JPanel panel2 = new JPanel();
 
             panel2.add(eliminar);
@@ -185,6 +232,7 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
             jPanel1.revalidate();
             jPanel1.repaint();
             players++;
+            name_players++;
         }
     }//GEN-LAST:event_aniadirActionPerformed
 
@@ -195,14 +243,9 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
     }//GEN-LAST:event_volverActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try
-        {
-            logic.Logica.empezar_partida(players);
-        }
-        catch (Exception ex)
-        {
-            
-        }
+
+        Partida partida = new Partida(players, campos, bicho_elegido, ia_o_humano);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

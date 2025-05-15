@@ -10,12 +10,39 @@ import java.util.ArrayList;
  * @author marco
  */
 public class Personaje {
-    private int id_carta;
-    private int vida;
-    private int exp;
-    private int ryos;
-    private boolean in_tokio;
-    private ArrayList<Carta> cartas;
+    private int id_personaje;
+    private String nombre;
+    private int vida = 10;
+    private int exp = 0;
+    private int ryos = 0;
+    private boolean in_tokio = false;
+    private boolean vivo = true;
+    private ArrayList<Carta> cartas = null;
+
+    public Personaje(int id_personaje, String nombre) {
+        this.id_personaje = id_personaje;
+        this.nombre = nombre;
+    }
+    
+    public boolean isVivo() {
+        return vivo;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setVivo(boolean vivo) {
+        this.vivo = vivo;
+    }
+
+    public void setCartas(ArrayList<Carta> cartas) {
+        this.cartas = cartas;
+    }
 
     public void ganar_vida(int vida)
     {
@@ -52,22 +79,15 @@ public class Personaje {
         
     }
     
-    public Personaje(int id_carta, int vida, int exp, int ryos, boolean in_tokio, ArrayList<Carta> cartas) {
-        this.id_carta = id_carta;
-        this.vida = vida;
-        this.exp = exp;
-        this.ryos = ryos;
-        this.in_tokio = in_tokio;
-        this.cartas = cartas;
-    }
+
 
     @Override
     public String toString() {
-        return "Personaje{" + "id_carta=" + id_carta + ", vida=" + vida + ", exp=" + exp + ", ryos=" + ryos + ", in_tokio=" + in_tokio + ", cartas=" + cartas + '}';
+        return "Personaje{" + "id_personaje=" + id_personaje + ", vida=" + vida + ", exp=" + exp + ", ryos=" + ryos + ", in_tokio=" + in_tokio + ", cartas=" + cartas + '}';
     }
 
-    public void setId_carta(int id_carta) {
-        this.id_carta = id_carta;
+    public void setId_personaje(int id_personaje) {
+        this.id_personaje = id_personaje;
     }
 
     public void setVida(int vida) {
@@ -86,12 +106,8 @@ public class Personaje {
         this.in_tokio = in_tokio;
     }
 
-    public void setCartas(ArrayList cartas) {
-        this.cartas = cartas;
-    }
-
-    public int getId_carta() {
-        return id_carta;
+    public int getId_personaje() {
+        return id_personaje;
     }
 
     public int getVida() {

@@ -5,6 +5,10 @@
 package kot;
 
 import layout.Cargando;
+import layout.Partida;
+import java.util.List;
+import clases.*;
+import javax.swing.*;
 
 /**
  *
@@ -12,6 +16,7 @@ import layout.Cargando;
  */
 public class Main {
 
+    private static int turno = 1;
     /**
      * @param args the command line arguments
      */
@@ -22,4 +27,8 @@ public class Main {
         cargar.cargar();
     }
     
+    public static void siguiente_turno()
+    {
+        turno += 1;
+    }
 }

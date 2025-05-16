@@ -16,7 +16,7 @@ import javax.swing.*;
  * @author marco
  */
 public class Dados extends JFrame {
-
+    private int veces_tirados = 0;
     private List<Boolean> seleccionado = new ArrayList<>();
     private List<Integer> dados = new ArrayList<>();
     private Dado dado = new Dado();
@@ -73,6 +73,11 @@ public class Dados extends JFrame {
     {
         this.revalidate();
         this.repaint();
+    }
+    
+    public List<Integer> getResult()
+    {
+        return (dados);
     }
 
     /**
@@ -143,6 +148,11 @@ public class Dados extends JFrame {
         terminar.setFont(new java.awt.Font("Liberation Sans", 0, 10)); // NOI18N
         terminar.setText("Resolver dados");
         terminar.setToolTipText("");
+        terminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                terminarActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("jButton8");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -228,9 +238,17 @@ public class Dados extends JFrame {
 
     private void tirar_otraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tirar_otraActionPerformed
         // TODO add your handling code here:
-        dados = dado.volver_a_tirar(seleccionado, dados);
-        colocar_img();
-        colocar_img();
+        if (veces_tirados < 2)
+        {
+            dados = dado.volver_a_tirar(seleccionado, dados);
+            colocar_img();
+            colocar_botones();
+            veces_tirados++;
+        }
+        else
+        {
+            this.dispose();
+        }
     }//GEN-LAST:event_tirar_otraActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -267,6 +285,11 @@ public class Dados extends JFrame {
         // TODO add your handling code here:
         seleccionado.set(7, true);
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void terminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terminarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_terminarActionPerformed
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

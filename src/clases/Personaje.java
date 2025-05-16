@@ -10,18 +10,17 @@ import java.util.ArrayList;
  * @author marco
  */
 public class Personaje {
-    private int id_personaje;
     private String nombre;
     private int vida = 10;
     private int exp = 0;
     private int ryos = 0;
-    private boolean in_tokio = false;
+    private boolean in_tokio;
     private boolean vivo = true;
     private ArrayList<Carta> cartas = null;
 
-    public Personaje(int id_personaje, String nombre) {
-        this.id_personaje = id_personaje;
+    public Personaje(String nombre, boolean in_tokio) {
         this.nombre = nombre;
+        this.in_tokio = in_tokio;
     }
     
     public boolean isVivo() {
@@ -79,16 +78,11 @@ public class Personaje {
         
     }
     
-
-
     @Override
     public String toString() {
-        return "Personaje{" + "id_personaje=" + id_personaje + ", vida=" + vida + ", exp=" + exp + ", ryos=" + ryos + ", in_tokio=" + in_tokio + ", cartas=" + cartas + '}';
+        return "Personaje{ vida=" + vida + ", exp=" + exp + ", ryos=" + ryos + ", in_tokio=" + in_tokio + ", cartas=" + cartas + '}';
     }
 
-    public void setId_personaje(int id_personaje) {
-        this.id_personaje = id_personaje;
-    }
 
     public void setVida(int vida) {
         this.vida = vida;
@@ -104,10 +98,6 @@ public class Personaje {
 
     public void setIn_tokio(boolean in_tokio) {
         this.in_tokio = in_tokio;
-    }
-
-    public int getId_personaje() {
-        return id_personaje;
     }
 
     public int getVida() {

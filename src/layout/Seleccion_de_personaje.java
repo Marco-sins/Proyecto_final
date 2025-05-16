@@ -244,8 +244,11 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        Partida partida = new Partida(players, campos, bicho_elegido, ia_o_humano);
-        this.dispose();
+        if (players <= 4 && players >= 2)
+        {
+            Partida partida = new Partida(players, campos, bicho_elegido, ia_o_humano);
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

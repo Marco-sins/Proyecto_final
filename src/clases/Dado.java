@@ -13,6 +13,11 @@ import java.util.List;
  */
 public class Dado 
 {    
+    public Dado()
+    {
+        
+    }
+    
     public List<Integer> tirar_dados(int n)
     {
         List<Integer> dados = new ArrayList<>();
@@ -28,7 +33,7 @@ public class Dado
     public static List<Integer> volver_a_tirar(List<Boolean> indices, List<Integer> dados)
 	{
             int i = 0;
-            while (i < 6)
+            while (i < dados.size())
             {
                     if (!indices.get(i))
                         dados.set(i, (int)(Math.random() * 6 + 1));

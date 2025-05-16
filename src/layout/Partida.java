@@ -8,20 +8,23 @@ import javax.swing.*;
 import java.util.List;
 import clases.Personaje;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
  * @author marco
  */
 public class Partida extends javax.swing.JFrame {
-
     /**
      * Creates new form Partida
      */
-    
+    private int turno = 0;
+    private boolean estan_dados = false;
+    private List<Personaje> personajes = new ArrayList<>();
     private List<JComboBox> bicho_elegido = new ArrayList<>();
     private List<JTextField> campos = new ArrayList<>();
     private List<JComboBox> ia_o_humano = new ArrayList<>();
+    private Dados dado = null;
     private int players;
 
     public Partida(int players, List<JTextField> list, List<JComboBox> bicho, List<JComboBox> ia) {
@@ -30,20 +33,64 @@ public class Partida extends javax.swing.JFrame {
         this.ia_o_humano = ia;
         this.players = players;
         initComponents();
-        set_nombres();
+        iniciar_todo();
+        set_menus();
         colocar_paneles(players);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
     
-    public void set_nombres()
-    {
-        nombre.setText("Nombre: " + (campos.get(0).getText()));
-        nombre2.setText("Nombre: " + (campos.get(1).getText()));
+    private void iniciar_todo()
+    {   
+        Personaje pj1 = new Personaje(campos.get(0).getText(), true);
+        personajes.add(0, pj1);
+        Personaje pj2 = new Personaje(campos.get(1).getText(), false);
+        personajes.add(1, pj2);
         if (players >= 3)
-            nombre3.setText("Nombre: " + (campos.get(2).getText()));
+        {
+            Personaje pj3 = new Personaje(campos.get(2).getText(), false);
+            personajes.add(2, pj3);
+        }
         if (players >= 4)
+        {
+            Personaje pj4 = new Personaje(campos.get(3).getText(), false);
+            personajes.add(3, pj4);
+        }
+    }
+    
+    private void set_menus()
+    {
+        //Player1 
+        nombre.setText("Nombre: " + (campos.get(0).getText()));
+        vida.setText("Vida: " + (personajes.get(0).getVida()));
+        exp.setText("Exp: " + (personajes.get(0).getExp()));
+        rayos.setText("Rayos: " + (personajes.get(0).getRyos()));
+        
+        //Player2
+        nombre2.setText("Nombre: " + (campos.get(1).getText()));
+        vida2.setText("Vida: " + (personajes.get(1).getVida()));
+        exp2.setText("Exp: " + (personajes.get(1).getExp()));
+        rayos2.setText("Rayos: " + (personajes.get(1).getRyos()));
+        
+        //Player3
+        if (players >= 3)
+        {
+            nombre3.setText("Nombre: " + (campos.get(2).getText()));
+            vida3.setText("Vida: " + (personajes.get(2).getVida()));
+            exp3.setText("Exp: " + (personajes.get(2).getExp()));
+            rayos3.setText("Rayos: " + (personajes.get(2).getRyos()));
+        }
+        
+        //Player4
+        if (players >= 4)
+        {
             nombre4.setText("Nombre: " + (campos.get(3).getText()));
+            vida4.setText("Vida: " + (personajes.get(3).getVida()));
+            exp4.setText("Exp: " + (personajes.get(3).getExp()));
+            rayos4.setText("Rayos: " + (personajes.get(3).getRyos()));
+        }
+        this.revalidate();
+        this.repaint();
     }
     
     public void colocar_paneles(int players)
@@ -59,6 +106,122 @@ public class Partida extends javax.swing.JFrame {
         }
         jPanel2.revalidate();
         jPanel2.repaint();
+    }
+    
+    private void solve_dados()
+    {
+        List<Integer> list_dado = dado.getResult();
+        Personaje p = null;
+        
+        switch (turno % players) 
+        {
+            case 0:
+            {
+                p = personajes.get(0);
+            }
+            case 1:
+            {
+                p = personajes.get(1);
+            }
+            case 2:
+            {
+                p = personajes.get(2);
+            }
+            case 3:
+            {
+                p = personajes.get(3);
+            }
+        }
+        
+        solve_dados2(p, list_dado);
+    }
+    
+    private void solve_dados2(Personaje p, List<Integer> dados)
+    {
+        int uno = 0;
+        int dos = 0;
+        int tres = 0;
+        Iterator<Integer> it = dados.iterator();
+        while (it.hasNext())
+        {
+            int n = it.next();
+            switch (n)
+            {
+                case 1:
+                {
+                    uno++;
+                }
+                case 2:
+                {
+                    dos++;
+                }
+                case 3:
+                {
+                    tres++;
+                }
+                case 4:
+                {
+                    p.ganar_vida(1);
+                }
+                case 5:
+                {
+                    Iterator<Personaje> it2 = personajes.iterator();
+                    if (p.isIn_tokio())
+                    {
+                        while (it2.hasNext())
+                        {
+                            Personaje pj = it2.next();
+                            pj.perder_vida(1);
+                        }
+                    }
+                    else
+                    {
+                        while (it2.hasNext())
+                        {
+                            Personaje pj = it2.next();
+                            if (pj.isIn_tokio())
+                                pj.perder_vida(1);
+                        }
+                    }
+                }
+                case 6:
+                {
+                    p.ganar_ryos(1);
+                }
+            }
+        }
+        solve_dados3(uno, dos, tres, p);
+    }
+    
+    private void solve_dados3(int a, int b, int c, Personaje p)
+    {
+        if (a == 3)
+            p.ganar_exp(1);
+        else if (a == 4)
+            p.ganar_exp(2);
+        else if (a == 5)
+            p.ganar_exp(3);
+        else if (a == 6)
+            p.ganar_exp(4);
+        
+        if (b == 3)
+            p.ganar_exp(2);
+        else if (b == 4)
+            p.ganar_exp(3);
+        else if (b == 5)
+            p.ganar_exp(4);
+        else if (b == 6)
+            p.ganar_exp(5);
+        
+        if (c == 3)
+            p.ganar_exp(3);
+        else if (c == 4)
+            p.ganar_exp(4);
+        else if (c == 5)
+            p.ganar_exp(5);
+        else if (c == 6)
+            p.ganar_exp(6);
+        set_menus();
     }
 
     /**
@@ -378,7 +541,9 @@ public class Partida extends javax.swing.JFrame {
 
     private void listoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listoActionPerformed
         // TODO add your handling code here:
-        kot.Main.siguiente_turno();
+        estan_dados = false;
+        solve_dados();
+        turno++;
     }//GEN-LAST:event_listoActionPerformed
 
     private void cartas4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartas4ActionPerformed
@@ -387,7 +552,11 @@ public class Partida extends javax.swing.JFrame {
 
     private void dadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dadosActionPerformed
         // TODO add your handling code here:
-        Dados dados = new Dados();
+        if (!estan_dados)
+        {
+            dado = new Dados();
+            estan_dados = true;
+        }  
     }//GEN-LAST:event_dadosActionPerformed
 
 

@@ -89,6 +89,35 @@ public class Partida extends javax.swing.JFrame {
             exp4.setText("Exp: " + (personajes.get(3).getExp()));
             rayos4.setText("Rayos: " + (personajes.get(3).getRyos()));
         }
+        Iterator<Personaje> it = personajes.iterator();
+        String str;
+        while (it.hasNext())
+        {
+            Personaje p = it.next();
+            if (p.isIn_tokio())
+                en_tokio.setText("En tokio: " + p.getNombre());
+        }
+        
+        if (turno % players == 0)
+        {
+            Personaje p = personajes.get(0);
+            turno_de.setText("Turno de: " + p.getNombre());
+        }
+        else if (turno % players == 1)
+        {
+            Personaje p = personajes.get(1);
+            turno_de.setText("Turno de: " + p.getNombre());
+        }
+        else if (turno % players == 2)
+        {
+           Personaje p = personajes.get(2);
+           turno_de.setText("Turno de: " + p.getNombre());
+        }
+        else if (turno % players == 3)
+        {
+           Personaje p = personajes.get(3);
+           turno_de.setText("Turno de: " + p.getNombre());
+        }
         this.revalidate();
         this.repaint();
     }
@@ -113,26 +142,25 @@ public class Partida extends javax.swing.JFrame {
         List<Integer> list_dado = dado.getResult();
         Personaje p = null;
         
-        switch (turno % players) 
+        if ((turno - 1) % players == 0)
         {
-            case 0:
-            {
-                p = personajes.get(0);
-            }
-            case 1:
-            {
-                p = personajes.get(1);
-            }
-            case 2:
-            {
-                p = personajes.get(2);
-            }
-            case 3:
-            {
-                p = personajes.get(3);
-            }
+             p = personajes.get(0);
+        }
+        else if ((turno - 1) % players == 1)
+        {
+            p = personajes.get(1);
+        }
+        else if ((turno - 1) % players == 2)
+        {
+            p = personajes.get(2);
+        }
+        else if ((turno - 1) % players == 3)
+        {
+            p = personajes.get(3);
         }
         
+        if (p.isIn_tokio() && turno != 0)
+            p.ganar_exp(1);
         solve_dados2(p, list_dado);
     }
     
@@ -141,59 +169,65 @@ public class Partida extends javax.swing.JFrame {
         int uno = 0;
         int dos = 0;
         int tres = 0;
+        boolean b = false;
+        boolean dialogo = false;
         Iterator<Integer> it = dados.iterator();
         while (it.hasNext())
         {
             int n = it.next();
-            switch (n)
+            if (n == 1)
+                uno++;
+            else if (n == 2)
+                dos++;
+            else if (n == 3)
+                tres++;
+            else if (n == 4)
             {
-                case 1:
-                {
-                    uno++;
-                }
-                case 2:
-                {
-                    dos++;
-                }
-                case 3:
-                {
-                    tres++;
-                }
-                case 4:
-                {
+                if (!p.isIn_tokio())
                     p.ganar_vida(1);
-                }
-                case 5:
+            }
+            else if (n == 5)
+            {
+                Iterator<Personaje> it2 = personajes.iterator();
+                if (p.isIn_tokio())
                 {
-                    Iterator<Personaje> it2 = personajes.iterator();
-                    if (p.isIn_tokio())
+                    while (it2.hasNext())
                     {
-                        while (it2.hasNext())
-                        {
-                            Personaje pj = it2.next();
+                        Personaje pj = it2.next();
+                        if (pj != p)
                             pj.perder_vida(1);
-                        }
-                    }
-                    else
-                    {
-                        while (it2.hasNext())
-                        {
-                            Personaje pj = it2.next();
-                            if (pj.isIn_tokio())
-                                pj.perder_vida(1);
-                        }
                     }
                 }
-                case 6:
+                else
                 {
-                    p.ganar_ryos(1);
+                    while (it2.hasNext())
+                    {
+                        Personaje pj = it2.next();
+                        if (pj != p)
+                        {
+                            if (pj.isIn_tokio())
+                            {
+                                pj.perder_vida(1);
+                                if (!dialogo)
+                                {
+                                    Salir_de_tokio s = new Salir_de_tokio(this, true);
+                                    b = s.get_salir();
+                                    dialogo = true;
+                                }
+                            }
+                        }
+                    }
                 }
             }
+            else if (n == 6)
+            {
+                p.ganar_ryos(1);
+            }
         }
-        solve_dados3(uno, dos, tres, p);
+        solve_dados3(uno, dos, tres, p, b);
     }
     
-    private void solve_dados3(int a, int b, int c, Personaje p)
+    private void solve_dados3(int a, int b, int c, Personaje p, boolean bb)
     {
         if (a == 3)
             p.ganar_exp(1);
@@ -221,6 +255,41 @@ public class Partida extends javax.swing.JFrame {
             p.ganar_exp(5);
         else if (c == 6)
             p.ganar_exp(6);
+        solve_dados4(p, bb);
+    }
+    
+    private void solve_dados4(Personaje p, boolean b)
+    {
+        if (p.isIn_tokio() && turno != 0)
+            p.ganar_exp(1);
+        if (b)
+        {
+            Iterator<Personaje> it = personajes.iterator();
+            while (it.hasNext())
+            {
+                Personaje pj = it.next();
+                if (pj.isIn_tokio())
+                    pj.setIn_tokio(false);
+            }
+            p.setIn_tokio(true);
+        }
+        
+        Iterator<Personaje> it2 = personajes.iterator();
+        while (it2.hasNext())
+        {
+            Personaje pj = it2.next();
+            if (pj.getVida() <= 0)
+            {
+                pj.setVivo(false);
+                personajes.remove(pj);
+                players--;
+            }
+        }
+        if (personajes.size() == 1)
+        {
+            
+        }
+            
         set_menus();
     }
 
@@ -262,6 +331,8 @@ public class Partida extends javax.swing.JFrame {
         exp3 = new javax.swing.JLabel();
         rayos3 = new javax.swing.JLabel();
         cartas3 = new javax.swing.JButton();
+        en_tokio = new javax.swing.JLabel();
+        turno_de = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("King of Tokio");
@@ -486,6 +557,10 @@ public class Partida extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        en_tokio.setText("jLabel1");
+
+        turno_de.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -503,19 +578,29 @@ public class Partida extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addComponent(tablero, javax.swing.GroupLayout.PREFERRED_SIZE, 737, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                        .addComponent(listo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                        .addComponent(listo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(en_tokio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(turno_de, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(en_tokio, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(turno_de, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
@@ -541,9 +626,12 @@ public class Partida extends javax.swing.JFrame {
 
     private void listoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listoActionPerformed
         // TODO add your handling code here:
-        estan_dados = false;
-        solve_dados();
-        turno++;
+        if (estan_dados)
+        {
+            estan_dados = false;
+            turno++;
+            solve_dados();
+        }
     }//GEN-LAST:event_listoActionPerformed
 
     private void cartas4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartas4ActionPerformed
@@ -566,6 +654,7 @@ public class Partida extends javax.swing.JFrame {
     private javax.swing.JButton cartas3;
     private javax.swing.JButton cartas4;
     private javax.swing.JButton dados;
+    private javax.swing.JLabel en_tokio;
     private javax.swing.JLabel exp;
     private javax.swing.JLabel exp2;
     private javax.swing.JLabel exp3;
@@ -586,6 +675,7 @@ public class Partida extends javax.swing.JFrame {
     private javax.swing.JLabel rayos4;
     private javax.swing.JLabel tablero;
     private javax.swing.JButton tienda;
+    private javax.swing.JLabel turno_de;
     private javax.swing.JLabel vida;
     private javax.swing.JLabel vida2;
     private javax.swing.JLabel vida3;

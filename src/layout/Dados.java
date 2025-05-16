@@ -17,13 +17,23 @@ import javax.swing.*;
  */
 public class Dados extends JFrame {
 
+    private List<Boolean> seleccionado = new ArrayList<>();
     private List<Integer> dados = new ArrayList<>();
-    private Dado dado;
+    private Dado dado = new Dado();
     private List<JButton> botones = new ArrayList<>();
     /**
      * Creates new form Dados
      */
     public Dados() {
+        dados = dado.tirar_dados(6);
+        initComponents();
+        iniciar_todo();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+    }
+    
+    private void iniciar_todo()
+    {
         botones.add(jButton1);
         botones.add(jButton2);
         botones.add(jButton3);
@@ -32,10 +42,18 @@ public class Dados extends JFrame {
         botones.add(jButton6);
         botones.add(jButton7);
         botones.add(jButton8);
-        dados = dado.tirar_dados(6);
+        colocar_botones();
         colocar_img();
-        initComponents();
-        this.setVisible(true);
+        this.remove(jButton7);
+        this.remove(jButton8);
+        seleccionado.add(false);
+        seleccionado.add(false);
+        seleccionado.add(false);
+        seleccionado.add(false);
+        seleccionado.add(false);
+        seleccionado.add(false);
+        seleccionado.add(false);
+        seleccionado.add(false);
     }
 
     private void colocar_img()
@@ -45,7 +63,7 @@ public class Dados extends JFrame {
         {
             int n = dados.get(i);
             JButton boton = botones.get(i);
-            ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/dado" + (i + 1) + ".jpg"));
+            ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/dado" + n + ".jpg"));
             boton.setIcon(icono);
             i++;
         }
@@ -53,8 +71,6 @@ public class Dados extends JFrame {
     
     private void colocar_botones()
     {
-        this.remove(jButton7);
-        this.remove(jButton8);
         this.revalidate();
         this.repaint();
     }
@@ -82,13 +98,33 @@ public class Dados extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         tirar_otra.setFont(new java.awt.Font("Liberation Sans", 0, 10)); // NOI18N
         tirar_otra.setText("Volver a tirar");
+        tirar_otra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tirar_otraActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("jButton5");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -98,16 +134,36 @@ public class Dados extends JFrame {
         });
 
         jButton4.setText("jButton4");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         terminar.setFont(new java.awt.Font("Liberation Sans", 0, 10)); // NOI18N
         terminar.setText("Resolver dados");
         terminar.setToolTipText("");
 
         jButton8.setText("jButton8");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("jButton7");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("jButton6");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -167,7 +223,50 @@ public class Dados extends JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        seleccionado.add(4, true);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void tirar_otraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tirar_otraActionPerformed
+        // TODO add your handling code here:
+        dados = dado.volver_a_tirar(seleccionado, dados);
+        colocar_img();
+        colocar_img();
+    }//GEN-LAST:event_tirar_otraActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        seleccionado.set(0, true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        seleccionado.set(1, true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        seleccionado.set(2, true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        seleccionado.set(3, true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        seleccionado.set(5, true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        seleccionado.set(6, true);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        seleccionado.set(7, true);
+    }//GEN-LAST:event_jButton8ActionPerformed
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -232,7 +232,7 @@ public class Partida extends javax.swing.JFrame {
                     while (it2.hasNext())
                     {
                         Personaje pj = it2.next();
-                        if (pj != p)
+                        if (pj != p && pj.isVivo())
                             pj.perder_vida(1);
                     }
                 }
@@ -326,12 +326,6 @@ public class Partida extends javax.swing.JFrame {
                 }
             }
         }
-        if (personajes.size() == 1)
-        {
-            Finish f = new Finish(this, true, personajes.get(0).getNombre());
-            this.dispose();
-            Menu m = new Menu();
-        }
         Iterator<Personaje> it3 = personajes.iterator();
         while (it3.hasNext())
         {
@@ -343,6 +337,24 @@ public class Partida extends javax.swing.JFrame {
                 Menu m = new Menu();
             }
                 
+        }
+        Iterator<Personaje> it4 = personajes.iterator();
+        Personaje pj = null;
+        int vivos = 0;
+        while (it4.hasNext())
+        {
+            Personaje pj2 = it4.next();
+            if (pj2.isVivo())
+            {
+                vivos++;
+                pj = pj2;
+            }
+        }
+        if (vivos == 1)
+        {
+            Finish f = new Finish(this, true, pj.getNombre());
+            this.dispose();
+            Menu m = new Menu();
         }
             
         set_menus();

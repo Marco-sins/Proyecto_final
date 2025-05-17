@@ -41,6 +41,7 @@ public class Salir_de_tokio extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("¿Quieres salir de Tokio?");
+        jLabel1.setToolTipText("");
 
         si.setText("Si");
         si.addActionListener(new java.awt.event.ActionListener() {
@@ -62,14 +63,13 @@ public class Salir_de_tokio extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(97, Short.MAX_VALUE)
-                .addComponent(si)
-                .addGap(75, 75, 75)
-                .addComponent(no)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(si)
+                        .addGap(75, 75, 75)
+                        .addComponent(no)))
                 .addGap(84, 84, 84))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(136, 136, 136)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

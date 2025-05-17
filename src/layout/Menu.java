@@ -4,6 +4,9 @@
  */
 package layout;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author marco
@@ -15,10 +18,19 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        cargar_imagen_logo();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
+    private void cargar_imagen_logo()
+    {
+        ImageIcon logo = new ImageIcon(getClass().getResource("/Imagenes/logo.jpg"));
+        Image logo2 = logo.getImage().getScaledInstance(216, 143, Image.SCALE_AREA_AVERAGING);
+        jLabel1.setIcon(new ImageIcon(logo2));
+        this.revalidate();
+        this.repaint();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,9 +46,8 @@ public class Menu extends javax.swing.JFrame {
         salir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menu");
         setResizable(false);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.jpg"))); // NOI18N
 
         un_jugador.setText("Jugar");
         un_jugador.addActionListener(new java.awt.event.ActionListener() {

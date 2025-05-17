@@ -5,6 +5,8 @@
 package layout;
 
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.Timer;
 /**
  *
@@ -17,6 +19,16 @@ public class Cargando extends javax.swing.JFrame {
      */
     public Cargando() {
         initComponents();
+        cargar_imagen_logo();
+    }
+    
+    public void cargar_imagen_logo()
+    {
+        ImageIcon logo = new ImageIcon(getClass().getResource("/Imagenes/logo.jpg"));
+        Image logo2 = logo.getImage().getScaledInstance(218, 139, Image.SCALE_AREA_AVERAGING);
+        jLabel1.setIcon(new ImageIcon(logo2));
+        this.revalidate();
+        this.repaint();
     }
 
     /**
@@ -32,10 +44,9 @@ public class Cargando extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("King of Tokio");
+        setTitle("Cargando");
         setResizable(false);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.jpg"))); // NOI18N
         jLabel1.setToolTipText("");
 
         jLabel2.setText("Cargando...");

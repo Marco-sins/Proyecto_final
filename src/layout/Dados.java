@@ -5,6 +5,7 @@
 package layout;
 
 import clases.Dado;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -64,7 +65,8 @@ public class Dados extends JFrame {
             int n = dados.get(i);
             JButton boton = botones.get(i);
             ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/dado" + n + ".jpg"));
-            boton.setIcon(icono);
+            Image image = icono.getImage().getScaledInstance(120, 100, Image.SCALE_AREA_AVERAGING);
+            boton.setIcon(new ImageIcon(image));
             i++;
         }
     }
@@ -101,6 +103,7 @@ public class Dados extends JFrame {
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Tirar Dados");
 
         jButton1.setText("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

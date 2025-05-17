@@ -5,6 +5,7 @@
 
 package layout;
 
+import java.awt.Image;
 import javax.swing.*;
 
 /**
@@ -23,9 +24,16 @@ public class Opciones extends javax.swing.JFrame {
             this.setLocationRelativeTo(null);
             this.setVisible(true);
             esta = true;
+            cargar_imagen_logo();
         }
     }
 
+    private void cargar_imagen_logo()
+    {
+        ImageIcon logo = new ImageIcon(getClass().getResource("/Imagenes/logo.jpg"));
+        Image logo2 = logo.getImage().getScaledInstance(417, 114, Image.SCALE_AREA_AVERAGING);
+        jLabel1.setIcon(new ImageIcon(logo2));
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -38,15 +46,12 @@ public class Opciones extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         logros = new javax.swing.JButton();
         estadisticas = new javax.swing.JButton();
-        color = new javax.swing.JButton();
         mensaje = new javax.swing.JButton();
         panel = new javax.swing.JPanel();
         volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo.jpg"))); // NOI18N
 
         logros.setText("Logros");
         logros.setToolTipText("");
@@ -57,8 +62,6 @@ public class Opciones extends javax.swing.JFrame {
         });
 
         estadisticas.setText("Estadisticas");
-
-        color.setText("Color de fondo");
 
         mensaje.setText("Mensaje del desarrollador");
         mensaje.addActionListener(new java.awt.event.ActionListener() {
@@ -75,7 +78,7 @@ public class Opciones extends javax.swing.JFrame {
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 110, Short.MAX_VALUE)
         );
 
         volver.setText("Volver");
@@ -96,8 +99,7 @@ public class Opciones extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(logros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(estadisticas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(color, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(estadisticas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -117,16 +119,14 @@ public class Opciones extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(logros)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(estadisticas)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(color)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(mensaje))
-                    .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -178,7 +178,6 @@ public class Opciones extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton color;
     private javax.swing.JButton estadisticas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton logros;

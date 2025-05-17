@@ -90,7 +90,7 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
 
         lista_bichos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "The King", "Alienoid", "Gigazaur", "Mekadragon", "Space Pinguin", "Boogie Woogie", "Pumping Jack", "Pandakai", "Cyber Kitty", " " }));
 
-        pc_o_humano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Humano", "IA" }));
+        pc_o_humano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Humano", "IA(Comming soon)" }));
 
         usuario.setText("Jugador1");
 
@@ -212,7 +212,7 @@ public class Seleccion_de_personaje extends javax.swing.JFrame {
             JComboBox<String> combo2 = new JComboBox<>();
             combo2.setName("ia_o_humano");
             combo2.addItem("Humano");
-            combo2.addItem("IA");
+            combo2.addItem("IA(Comming soon)");
             JTextField usuario = new JTextField();
             campos.add(usuario);
             usuario.setText("Jugador" + name_players);

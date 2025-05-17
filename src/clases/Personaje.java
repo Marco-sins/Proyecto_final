@@ -45,7 +45,8 @@ public class Personaje {
 
     public void ganar_vida(int vida)
     {
-        this.vida += vida;
+        if (this.vida < 10)
+            this.vida += vida;
     }
     
     public void perder_vida(int vida)

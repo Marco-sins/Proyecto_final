@@ -98,25 +98,52 @@ public class Partida extends javax.swing.JFrame {
                 en_tokio.setText("En tokio: " + p.getNombre());
         }
         
-        if (turno % players == 0)
+        for (boolean b = false; !b; )
         {
-            Personaje p = personajes.get(0);
-            turno_de.setText("Turno de: " + p.getNombre());
-        }
-        else if (turno % players == 1)
-        {
-            Personaje p = personajes.get(1);
-            turno_de.setText("Turno de: " + p.getNombre());
-        }
-        else if (turno % players == 2)
-        {
-           Personaje p = personajes.get(2);
-           turno_de.setText("Turno de: " + p.getNombre());
-        }
-        else if (turno % players == 3)
-        {
-           Personaje p = personajes.get(3);
-           turno_de.setText("Turno de: " + p.getNombre());
+            if (turno % players == 0)
+            {
+                Personaje p = personajes.get(0);
+                if (p.isVivo())
+                {
+                    turno_de.setText("Turno de: " + p.getNombre());
+                    b = true;
+                }
+                else 
+                    turno++;
+            }
+            else if (turno % players == 1)
+            {
+                Personaje p = personajes.get(1);
+                if (p.isVivo())
+                {
+                    turno_de.setText("Turno de: " + p.getNombre());
+                    b = true;
+                }
+                else
+                    turno++;
+            }
+            else if (turno % players == 2)
+            {
+               Personaje p = personajes.get(2);
+               if (p.isVivo())
+               {
+                    turno_de.setText("Turno de: " + p.getNombre());
+                    b = true;
+               }
+               else 
+                   turno++;
+            }
+            else if (turno % players == 3)
+            {
+               Personaje p = personajes.get(3);
+               if (p.isVivo())
+               {
+                    turno_de.setText("Turno de: " + p.getNombre());
+                    b = true;
+               }
+               else 
+                   turno++;
+            }
         }
         this.revalidate();
         this.repaint();
@@ -142,21 +169,32 @@ public class Partida extends javax.swing.JFrame {
         List<Integer> list_dado = dado.getResult();
         Personaje p = null;
         
-        if ((turno - 1) % players == 0)
+        for (boolean b = false; !b; )
         {
-             p = personajes.get(0);
-        }
-        else if ((turno - 1) % players == 1)
-        {
-            p = personajes.get(1);
-        }
-        else if ((turno - 1) % players == 2)
-        {
-            p = personajes.get(2);
-        }
-        else if ((turno - 1) % players == 3)
-        {
-            p = personajes.get(3);
+            if ((turno - 1) % players == 0)
+            {
+                p = personajes.get(0);
+                if (p.isVivo())
+                    b = true;
+            }
+            else if ((turno - 1) % players == 1)
+            {
+                p = personajes.get(1);
+                if (p.isVivo())
+                    b = true;
+            }
+            else if ((turno - 1) % players == 2)
+            {
+                p = personajes.get(2);
+                if (p.isVivo())
+                    b = true;
+            }
+            else if ((turno - 1) % players == 3)
+            {
+                p = personajes.get(3);
+                if (p.isVivo())
+                    b = true;
+            }
         }
         
         if (p.isIn_tokio() && turno != 0)
@@ -281,13 +319,30 @@ public class Partida extends javax.swing.JFrame {
             if (pj.getVida() <= 0)
             {
                 pj.setVivo(false);
-                personajes.remove(pj);
-                players--;
+                if (pj.isIn_tokio())
+                {
+                    pj.setIn_tokio(false);
+                    p.setIn_tokio(true);
+                }
             }
         }
         if (personajes.size() == 1)
         {
-            
+            Finish f = new Finish(this, true, personajes.get(0).getNombre());
+            this.dispose();
+            Menu m = new Menu();
+        }
+        Iterator<Personaje> it3 = personajes.iterator();
+        while (it3.hasNext())
+        {
+            Personaje pj = it3.next();
+            if (pj.getExp() >= 20)
+            {
+                Finish f = new Finish(this, true, pj.getNombre());
+                this.dispose();
+                Menu m = new Menu();
+            }
+                
         }
             
         set_menus();
